@@ -64,11 +64,27 @@ function readSavedCart(): Cart {
   }
 }
 
+function catalogProduct(product: Product & { image_url?: string; source_url?: string }) {
+  return { ...product, tone: product.tone || 'sage', mark: product.mark || product.brand.slice(0, 2).toUpperCase() }
+}
+
 function App() {
+  const [catalog, setCatalog] = useState<Product[]>(products)
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('All')
   const [cart, setCart] = useState<Cart>(readSavedCart)
   const [showList, setShowList] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const [importMessage, setImportMessage] = useState('')
+
+  useEffect(() => {
+    fetch('/api/catalog')
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Local catalog server unavailable')))
+      .then((data: { items: (Product & { image_url?: string; source_url?: string })[] }) => {
+        if (data.items.length) setCatalog(data.items.map(catalogProduct))
+      })
+      .catch(() => setImportMessage('Start the local catalog server to use SQLite.'))
+  }, [])
 
   useEffect(() => {
     window.localStorage.setItem(listStorageKey, JSON.stringify(cart))
@@ -76,14 +92,14 @@ function App() {
 
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
-    return products.filter((product) => {
+    return catalog.filter((product) => {
       const matchesCategory = activeCategory === 'All' || product.category === activeCategory
       const matchesQuery = !normalizedQuery || [product.name, product.brand, product.category, product.section].some((value) => value.toLowerCase().includes(normalizedQuery))
       return matchesCategory && matchesQuery
     })
-  }, [activeCategory, query])
+  }, [activeCategory, catalog, query])
 
-  const listProducts = useMemo(() => products.filter((product) => cart[product.id]).sort((a, b) => a.aisle - b.aisle || a.name.localeCompare(b.name)), [cart])
+  const listProducts = useMemo(() => catalog.filter((product) => cart[product.id]).sort((a, b) => a.aisle - b.aisle || a.name.localeCompare(b.name)), [cart, catalog])
   const itemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0)
   const subtotal = listProducts.reduce((total, product) => total + product.price * cart[product.id], 0)
 
@@ -102,6 +118,24 @@ function App() {
     if (itemCount && !window.confirm('Start a new list? Your current list will be cleared.')) return
     setCart({})
     setShowList(true)
+  }
+
+  async function importCatalog() {
+    setImporting(true)
+    setImportMessage('Importing catalog into SQLite...')
+    try {
+      const response = await fetch('/api/catalog/import', { method: 'POST' })
+      const result = await response.json() as { count?: number; warning?: string; error?: string }
+      if (!response.ok) throw new Error(result.error || 'Catalog import failed')
+      const catalogResponse = await fetch('/api/catalog')
+      const data = await catalogResponse.json() as { items: (Product & { image_url?: string; source_url?: string })[] }
+      setCatalog(data.items.map(catalogProduct))
+      setImportMessage(`${result.count} items stored in SQLite. ${result.warning || ''}`)
+    } catch (error) {
+      setImportMessage(error instanceof Error ? error.message : 'Catalog import failed')
+    } finally {
+      setImporting(false)
+    }
   }
 
   return (
@@ -148,8 +182,9 @@ function App() {
               <p className="section-kicker">Browse catalog</p>
               <h2>What are you picking up?</h2>
             </div>
-            <span className="result-count">{filteredProducts.length} items</span>
+            <div className="catalog-tools"><span className="result-count">{filteredProducts.length} items</span><button className="import-button" type="button" onClick={importCatalog} disabled={importing}>{importing ? 'Importing...' : 'Import catalog'}</button></div>
           </div>
+          {importMessage && <p className="import-message">{importMessage}</p>}
           <label className="search-field">
             <span className="search-mark">/</span>
             <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by item, brand, or section" aria-label="Search products" />

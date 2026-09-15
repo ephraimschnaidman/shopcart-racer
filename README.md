@@ -15,7 +15,8 @@ A private, mobile-first prototype for building an Aisle One shopping list organi
 
 ```bash
 npm install
+npm run server
 npm run dev
 ```
 
-The catalog is intentionally local and may not reflect current price or availability. A future live catalog should use a permissioned data feed from Aisle One rather than automated scraping.
+The catalog database is stored at `data/shopcart-racer.sqlite`. The current import button loads the local seed catalog. A complete live import should use a permissioned data feed from Aisle One rather than automated scraping; the storefront currently blocks direct server requests.

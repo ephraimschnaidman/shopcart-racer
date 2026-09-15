@@ -1,0 +1,22 @@
+[
+  {"id":1,"name":"Chocolate Babka","brand":"Babkatoure","size":"24 oz","price":28.79,"section":"Bakery","aisle":1,"category":"Bakery"},
+  {"id":2,"name":"Cinnamon Babka","brand":"Babkatoure","size":"24 oz","price":28.79,"section":"Bakery","aisle":1,"category":"Bakery"},
+  {"id":3,"name":"Challah, Classic","brand":"Aisle One","size":"16 oz","price":6.49,"section":"Bakery","aisle":1,"category":"Bakery"},
+  {"id":4,"name":"Standing Rib Roast","brand":"Solomon's","size":"5 lb","price":35.99,"section":"Fresh meat","aisle":2,"category":"Meat"},
+  {"id":5,"name":"First Cut Brisket","brand":"Solomon's","size":"2.45 lb","price":19.99,"section":"Fresh meat","aisle":2,"category":"Meat"},
+  {"id":6,"name":"Chicken & Turkey Cutlets","brand":"KJ Poultry","size":"21 oz","price":14.99,"section":"Fresh meat","aisle":2,"category":"Meat"},
+  {"id":7,"name":"Osem Chicken Soup Mix","brand":"Osem","size":"1.9 oz","price":3.49,"section":"Pantry","aisle":3,"category":"Pantry"},
+  {"id":8,"name":"Gefilte Fish, Original","brand":"Rokeach","size":"24 oz","price":8.99,"section":"Pantry","aisle":3,"category":"Pantry"},
+  {"id":9,"name":"Extra Virgin Olive Oil","brand":"Tuscanini","size":"33.8 fl oz","price":14.49,"section":"Pantry","aisle":3,"category":"Pantry"},
+  {"id":10,"name":"Black Tea Bags","brand":"Wissotzky","size":"20 ct","price":5.99,"section":"Pantry","aisle":3,"category":"Pantry"},
+  {"id":11,"name":"Assorted Cookie Platter","brand":"Chewzy","size":"32 oz","price":15.79,"section":"Sweets","aisle":4,"category":"Sweets"},
+  {"id":12,"name":"Medjool Dates with Almond","brand":"Dorrel","size":"7.5 oz","price":14.49,"section":"Sweets","aisle":4,"category":"Sweets"},
+  {"id":13,"name":"Chocolate Coins","brand":"Elite","size":"3.5 oz","price":4.99,"section":"Sweets","aisle":4,"category":"Sweets"},
+  {"id":14,"name":"Sparkling Water, Lime","brand":"Aqua Panna","size":"6 x 1 L","price":8.99,"section":"Drinks","aisle":5,"category":"Drinks"},
+  {"id":15,"name":"Grape Juice","brand":"Kedem","size":"64 fl oz","price":7.49,"section":"Drinks","aisle":5,"category":"Drinks"},
+  {"id":16,"name":"Ginger Ale","brand":"Dr. Brown's","size":"2 L","price":3.99,"section":"Drinks","aisle":5,"category":"Drinks"},
+  {"id":17,"name":"Shredded Mozzarella","brand":"Cholov Yisroel","size":"8 oz","price":6.99,"section":"Chilled","aisle":6,"category":"Chilled"},
+  {"id":18,"name":"Sour Cream","brand":"Tnuva","size":"16 oz","price":4.49,"section":"Chilled","aisle":6,"category":"Chilled"},
+  {"id":19,"name":"Salted Butter","brand":"Meadow","size":"4 sticks","price":7.99,"section":"Chilled","aisle":6,"category":"Chilled"},
+  {"id":20,"name":"Frozen Potato Knishes","brand":"Mrs. Adler's","size":"13 oz","price":8.49,"section":"Frozen","aisle":7,"category":"Frozen"}
+]
